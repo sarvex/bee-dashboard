@@ -22,6 +22,10 @@ import {
 } from '@ethersphere/bee-js'
 import { apiHost, debugApiHost } from '../constants'
 
+interface LastCashoutPeerAction extends LastCashoutActionResponse {
+  uncashedAmount: number
+}
+
 const beeJSClient = () => new Bee(apiHost)
 
 const beeJSDebugClient = () => new BeeDebug(debugApiHost)
@@ -80,8 +84,8 @@ export const beeDebugApi = {
     peerCashout(peerId: string): Promise<CashoutResponse> {
       return beeJSDebugClient().cashoutLastCheque(peerId)
     },
-    getPeerLastCashout(peerId: string): Promise<LastCashoutActionResponse> {
-      return beeJSDebugClient().getLastCashoutAction(peerId)
+    getPeerLastCashout(peerId: string): Promise<LastCashoutPeerAction> {
+      return (beeJSDebugClient().getLastCashoutAction(peerId) as unknown) as Promise<LastCashoutPeerAction>
     },
     getPeerLastCheques(peerId: string): Promise<LastChequesForPeerResponse> {
       return beeJSDebugClient().getLastChequesForPeer(peerId)

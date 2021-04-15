@@ -25,3 +25,12 @@ interface StatusChequebookHook extends StatusHookCommon {
   chequebookBalance: ChequebookBalanceResponse | null
   chequebookAddress: ChequebookAddressResponse | null
 }
+
+interface Accounting {
+  balance: number
+  lastreceived: Cheque
+  lastsent: Cheque
+  received: number
+  sent: number
+  uncashedAmount: number
+}

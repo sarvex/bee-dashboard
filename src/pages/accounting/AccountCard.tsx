@@ -5,11 +5,10 @@ import { Card, CardContent, Typography, Grid } from '@material-ui/core/'
 import { Skeleton } from '@material-ui/lab'
 import WithdrawModal from '../../containers/WithdrawModal'
 import DepositModal from '../../containers/DepositModal'
-import CashoutModal from '../../components/CashoutModal'
 
 import { fromBZZbaseUnit } from '../../utils'
 
-import type { AllSettlements, ChequebookAddressResponse } from '@ethersphere/bee-js'
+import type { ChequebookAddressResponse } from '@ethersphere/bee-js'
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -43,7 +42,8 @@ interface Props {
   isLoadingChequebookAddress: boolean
   chequebookBalance: ChequebookBalance | null
   isLoadingChequebookBalance: boolean
-  settlements: AllSettlements | null
+  totalsent: number
+  totalreceived: number
   isLoadingSettlements: boolean
 }
 
@@ -57,7 +57,6 @@ function AccountCard(props: Props): ReactElement {
         <div style={{ display: 'flex' }}>
           <WithdrawModal />
           <DepositModal />
-          <CashoutModal />
         </div>
       </div>
 
@@ -88,22 +87,14 @@ function AccountCard(props: Props): ReactElement {
                   </Typography>
                   <Typography component="div" variant="h5">
                     <span style={{ marginRight: '7px' }}>
-                      {fromBZZbaseUnit(props.settlements?.totalsent || 0)} /{' '}
-                      {fromBZZbaseUnit(props.settlements?.totalreceived || 0)}
+                      {fromBZZbaseUnit(props.totalsent)} / {fromBZZbaseUnit(props.totalreceived)}
                     </span>
                     <span
                       style={{
-                        color:
-                          props.settlements && props.settlements?.totalsent > props.settlements?.totalreceived
-                            ? '#c9201f'
-                            : '#32c48d',
+                        color: props.totalsent > props.totalreceived ? '#c9201f' : '#32c48d',
                       }}
                     >
-                      (
-                      {fromBZZbaseUnit(
-                        (props.settlements && props.settlements?.totalsent - props.settlements?.totalreceived) || 0,
-                      )}
-                      )
+                      ({fromBZZbaseUnit(props.totalsent - props.totalreceived)})
                     </span>
                   </Typography>
                 </Grid>
