@@ -30,7 +30,7 @@
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@types/react-router": "^5.1.13",
     "@types/react-router-dom": "^5.1.7",
-    "axios": "^0.21.1",
+    "axios": "^0.28.0",
     "bignumber.js": "^9.0.1",
     "feather-icons": "^4.28.0",
     "material-ui-dropzone": "^3.5.0",
